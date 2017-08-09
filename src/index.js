@@ -1,6 +1,16 @@
 function Application(options) {
     this.options = options || {};
 
+    this.initEvents = function () {
+        let _ = this;
+        document.addEventListener('mousemove', function (e) {
+            console.log(e.clientX/100000)
+            console.log(e.clientY/100000)
+            _.sphere.rotation.y += e.clientY / 100000;
+            _.sphere.rotation.x += e.clientX / 100000;
+        }, false);
+    }
+
     this.init = function () {
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
@@ -15,6 +25,9 @@ function Application(options) {
 
         this.sphere = new THREE.Mesh( this.sphereGeometry, this.sphereMaterial );
         this.scene.add( this.sphere );
+
+
+        this.initEvents();
     }
 
     this.animate = function () {
